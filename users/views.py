@@ -1,5 +1,6 @@
 """user views
 """
+
 from django.utils import timezone
 from django.views import View
 from django.contrib import auth
@@ -62,17 +63,21 @@ class UserRegisterView(View):
         Returns:
             HttpResponse: redirect or register view with error hints
         """
-        profanity.add_censor_words(custom_badwords)
-        form = self.form_class(request.POST.copy())
-        form.data["username"] = profanity.censor(form.data["username"])
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.email = request.POST.get("email").lower()
-            user.set_password(request.POST.get("password1"))
-            user.save()
-            return redirect("users:welcome")
-        return render(request, self.template_name, {"form": form})
+        try:
+            profanity.add_censor_words(custom_badwords)
+            form = self.form_class(request.POST.copy())
+            form.data["username"] = profanity.censor(form.data["username"])
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.username = user.username.lower()
+                user.email = request.POST.get("email").lower()
+                user.set_password(request.POST.get("password1"))
+                user.save()
+                return redirect("users:welcome")
+            return render(request, self.template_name, {"form": form})
+        except Exception as error:
+            with open("logs.txt", "w") as f:
+                f.write(error)
 
 
 class UserLoginView(View):
