@@ -99,6 +99,7 @@ ALLOWED_HOSTS = (
     else [
         "parkrowd-prod.us-west-2.elasticbeanstalk.com",
         "parkrowd-develop.us-west-2.elasticbeanstalk.com",
+        "parkrowd-env.eba-spjjw3yh.us-west-2.elasticbeanstalk.com",
     ]
 )
 

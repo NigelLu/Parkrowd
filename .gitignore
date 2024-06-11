@@ -55,3 +55,7 @@ media/verification_files/*
 
 # * e-mails
 mails/*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
